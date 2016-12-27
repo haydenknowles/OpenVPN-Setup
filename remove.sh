@@ -13,11 +13,11 @@ fi
 apt-get -y remove openvpn
 
 # Remove openvpn-related directories
-rm -r /etc/openvpn /home/pi/ovpns
+rm -r /etc/openvpn /home/$USER/ovpns
 
 # Remove firewall script and reference to it in interfaces
 sed -i '/firewall-openvpn-rules.sh/d' /etc/rc.local
-sed -i 'sudo service openvpn start/d' /etc/rc.local
+sed -i 'sudo systemctl start openvpn/d' /etc/rc.local
 rm /etc/firewall-openvpn-rules.sh
 
 # Disable IPv4 forwarding
