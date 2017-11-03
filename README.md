@@ -1,6 +1,9 @@
 OpenVPN-Setup
 ============
 
+Note: Ongoing research into fixing Easy-RSA dependency in Raspbian Stretch is being conducted
+=============================================================================================
+
 About
 -----
 

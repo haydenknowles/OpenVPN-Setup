@@ -15,7 +15,7 @@ echo "Updating, Upgrading, and Installing..."
 apt-get update
 apt-get -y upgrade
 apt-get -y install openvpn
-apt-get install easy-rsa
+apt-get install easy-rsa #change to git download, unzip
 
 # Read the local and public IP addresses from the user
 LOCALIP=$(whiptail --inputbox "What is your Raspberry Pi's local IP address?" \
@@ -45,13 +45,18 @@ of encryption:" 8 78 2 \
 "2048" "Use 2048-bit encryption. This is much slower to set up, but more secure." \
 3>&2 2>&1 1>&3)
 
+# Change Easy-RSA location and variable references in lines 50-80 to equivalent new ones
+
 # Copy the easy-rsa files to a directory inside the new openvpn directory
-cp -r /usr/share/easy-rsa /etc/openvpn
+cp -r /etc/EasyRSA-3.0.3 /etc/openvpn
+#cp -r /usr/share/easy-rsa /etc/openvpn
 
 # Edit the EASY_RSA variable in the vars file to point to the new easy-rsa directory,
 # And change from default 1024 encryption if desired
-cd /etc/openvpn/easy-rsa
-sed -i 's:"`pwd`":"/etc/openvpn/easy-rsa":' vars
+cd /etc/openvpn/EasyRSA-3.0.3
+#cd /etc/openvpn/easy-rsa
+cp vars.example vars
+sed -i 's:"$PWD":"/etc/openvpn/easy-rsa":' vars
 if [ $ENCRYPT = 1024 ]; then
  sed -i 's:KEY_SIZE=2048:KEY_SIZE=1024:' vars
 fi
@@ -60,19 +65,22 @@ fi
 source ./vars
 
 # Remove any previous keys
-./clean-all
+#./clean-all
 
 # Build the certificate authority
-./build-ca < /home/pi/OpenVPN-Setup/ca_info.txt
+./easyrsa build-ca
+#./build-ca < /home/pi/OpenVPN-Setup/ca_info.txt
 
 whiptail --title "Setup OpenVPN" --msgbox "You will now be asked for identifying \
 information for the server. Press 'Enter' to skip a field." 8 78
 
 # Build the server
-./build-key-server server
+./easyrsa build-server-full server
+#./build-key-server server
 
 # Generate Diffie-Hellman key exchange
-./build-dh
+./easyrsa gen-dh
+#./build-dh
 
 # Generate static HMAC key to defend against DDoS
 openvpn --genkey --secret keys/ta.key
