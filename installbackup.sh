@@ -11,7 +11,9 @@ else
 fi
 
 # Update packages and install openvpn
-echo "Installing openvpn"
+echo "Updating, Upgrading, and Installing..."
+apt-get update
+apt-get -y upgrade
 apt-get -y install openvpn
 apt-get install easy-rsa #change to git download, unzip
 
