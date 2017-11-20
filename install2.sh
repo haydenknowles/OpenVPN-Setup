@@ -13,17 +13,18 @@ echo "Installing openvpn"
 apt-get -y install openvpn
 
 # Install and prepare Easy RSA
-#change to download from Github
-apt-get install easy-
-
-
+VER=2.x # Easy-RSA version number
+cd /etc/openvpn
+mkdir easyrsa
+wget https://github.com/OpenVPN/easy-rsa/archive/release/$VER.zip
+unzip $VER.zip
+rm $VER.x.zip
+cp -r /etc/openvpn/easy-rsa-release-$VER/easy-rsa/2.0 /etc/openvpn/easyrsa
 # Copy the easy-rsa files to a directory inside the new openvpn directory
-cp -r /etc/EasyRSA-3.0.3 /etc/openvpn
-#cp -r /usr/share/easy-rsa /etc/openvpn
 
 # Edit the EASY_RSA variable in the vars file to point to the new easy-rsa directory,
 # And change from default 1024 encryption if desired
-cd /etc/openvpn/EasyRSA-3.0.3
+cd /etc/openvpn/easy
 #cd /etc/openvpn/easy-rsa
 cp vars.example vars
 sed -i 's:"$PWD":"/etc/openvpn/easy-rsa":' vars
