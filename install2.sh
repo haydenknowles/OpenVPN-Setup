@@ -8,29 +8,45 @@ else
  exit
 fi
 
-# Install openvpn
+#Step 4A Install openvpn
 echo "Installing openvpn"
 apt-get -y install openvpn
 
-# Install and prepare Easy RSA
+#Step 4B Install and prepare Easy RSA
 VER=2 # Easy-RSA version number
 cd /etc/openvpn
-mkdir easyrsa
+mkdir easy-rsa
 wget https://github.com/OpenVPN/easy-rsa/archive/release/$VER.x.zip
 unzip $VER.x.zip
 rm $VER.x.zip
-cp -r /etc/openvpn/easy-rsa-release-$VER.x/easy-rsa/2.0 /etc/openvpn/easyrsa
-# Copy the easy-rsa files to a directory inside the new openvpn directory
 
-# Edit the EASY_RSA variable in the vars file to point to the new easy-rsa directory,
-# And change from default 1024 encryption if desired
-cd /etc/openvpn/easy
-#cd /etc/openvpn/easy-rsa
-cp vars.example vars
-sed -i 's:"$PWD":"/etc/openvpn/easy-rsa":' vars
+# Step 5 Copy the easy-rsa files to a directory inside the new openvpn directory
+cp -r /etc/openvpn/easy-rsa-release-$VER.x/easy-rsa/2.0/* /etc/openvpn/easy-rsa
+
+#Step 6 Go to new easy-rsa directory
+cd /etc/openvpn/easy-rsa
+
+#Step 7 Edit vars
+#Edit the EASY_RSA variable in the vars file to point to the new easy-rsa directory,
+#And change from default 1024 encryption if desired
+cp vars vars.backup
+sed -i 's:"`pwd`":"/etc/openvpn/easy-rsa":' vars #
 if [ $ENCRYPT = 1024 ]; then
- sed -i 's:KEY_SIZE=2048:KEY_SIZE=1024:' vars
+ sed -i 's:KEY_SIZE=2048:KEY_SIZE=1024:' vars #
 fi
 
-# source the vars file just edited
+#Step 8 Source vars file and build the CA
 source ./vars
+./clean-all
+./build-ca
+
+#Step 9 Build server key pair
+./build-key-server server
+
+#Step 12 Generate Diffie-Hellman exchange
+./build-dh
+
+#Step 13 Generate HMAC key
+openvpn --genkey --secret keys/ta.key
+
+#Step 14 Edit server.conf
