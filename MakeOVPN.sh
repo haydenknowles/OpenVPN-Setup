@@ -9,19 +9,19 @@ KEY=".3des.key"
 CA="ca.crt" 
 TA="ta.key" 
 
-#Ask for a Client name
-#NAME=$(whiptail --inputbox "Please enter a Name for the Client:" \
-#8 78 --title "MakeOVPN" 3>&1 1>&2 2>&3)
-#exitstatus=$?
-#if [ $exitstatus = 0 ]; then
-# whiptail --title "MakeOVPN" --infobox "Name: $NAME" 8 78
-#else
-# whiptail --title "MakeOVPN" --infobox "Cancelled" 8 78
-# exit
-#fi
+Ask for a Client name
+NAME=$(whiptail --inputbox "Please enter a Name for the Client:" \
+8 78 --title "MakeOVPN" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+ whiptail --title "MakeOVPN" --infobox "Name: $NAME" 8 78
+else
+ whiptail --title "MakeOVPN" --infobox "Cancelled" 8 78
+ exit
+fi
 
-echo "Please enter a Name for the Client:"
-read NAME 
+#echo "Please enter a Name for the Client:"
+#read NAME 
  
 #Build the client key and then encrypt the key
 sudo chmod 777 -R /etc/openvpn
