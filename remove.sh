@@ -9,11 +9,22 @@ else
  exit
 fi
 
+# Read username from the user
+USER=$(whiptail --inputbox "Which user is the server being run under?" \
+8 78 --title "Setup OpenVPN" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+ whiptail --title "Setup OpenVPN" --infobox "User: $USER" 8 78
+else
+ whiptail --title "Setup OpenVPN" --infobox "Cancelled" 8 78
+ exit
+fi
+
 # Remove openvpn
 apt-get -y remove openvpn
 
 # Remove openvpn-related directories
-rm -r /etc/openvpn /home/pi/ovpns
+rm -r /etc/openvpn /home/$USER/ovpns
 
 # Remove firewall script and reference to it in interfaces
 sed -i '/firewall-openvpn-rules.sh/d' /etc/rc.local
