@@ -9,7 +9,7 @@ KEY=".3des.key"
 CA="ca.crt" 
 TA="ta.key" 
 
-Ask for a Client name
+#Ask for a Client name
 NAME=$(whiptail --inputbox "Please enter a Name for the Client:" \
 8 78 --title "MakeOVPN" 3>&1 1>&2 2>&3)
 exitstatus=$?
