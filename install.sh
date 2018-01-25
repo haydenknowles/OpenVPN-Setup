@@ -15,15 +15,23 @@ fi
 echo "Updating, Upgrading, and Installing..."
 apt-get -y install openvpn
 
+#Install easy-rsa - VERSION 2.x
+#VER=2 # Easy-RSA version number
+#cd /etc/openvpn
+#mkdir easy-rsa
+#wget https://github.com/OpenVPN/easy-rsa/archive/release/$VER.x.zip
+#unzip $VER.x.zip
+#rm $VER.x.zip
+#cp -r /etc/openvpn/easy-rsa-release-$VER.x/easy-rsa/2.0/* /etc/openvpn/easy-rsa
+
 #Install easy-rsa
-VER=2 # Easy-RSA version number
 cd /etc/openvpn
 mkdir easy-rsa
-wget https://github.com/OpenVPN/easy-rsa/archive/release/$VER.x.zip
-unzip $VER.x.zip
-rm $VER.x.zip
-cp -r /etc/openvpn/easy-rsa-release-$VER.x/easy-rsa/2.0/* /etc/openvpn/easy-rsa
-
+wget https://github.com/OpenVPN/easy-rsa/archive/v3.0.5.zip
+unzip v3.0.5.zip
+rm v3.0.5.zip
+cp -r /etc/openvpn/easy-rsa-3.0.5/easyrsa3 /etc/openvpn/easy-rsa
+#Update command usage
 
 #ACCEPT CONFIGURATION INPUT FROM USER
 # Read username from the user
