@@ -77,24 +77,25 @@ of encryption:" 8 78 2 \
 
 #EASY-RSA SETUP
 cd /etc/openvpn/easy-rsa
-cp vars vars.backup
-sed -i 's:"`pwd`":"/etc/openvpn/easy-rsa":' vars
+cp vars.example vars
+sed -i 's:"`pwd`":"/etc/openvpn/easy-rsa":' vars #change
 if [ $ENCRYPT = 1024 ]; then
  sed -i 's:KEY_SIZE=2048:KEY_SIZE=1024:' vars
 fi
 
 #Build the CA
 source ./vars
-./clean-all
-./build-ca < /home/$USER/OpenVPN-Setup/ca_info.txt
+#./clean-all
+easyrsa build-ca < /home/$USER/OpenVPN-Setup/ca_info.txt
 
 whiptail --title "Setup OpenVPN" --msgbox "You will now be asked for identifying \
 information for the server. Press 'Enter' to skip a field." 8 78
 #Build server key pair
-./build-key-server server
+#./build-key-server server
+easyrsa build-server-full server
 
 #Generate Diffie-Hellman exchange
-./build-dh
+easyrsa gen-dh
 
 #Generate HMAC key
 openvpn --genkey --secret keys/ta.key
