@@ -24,7 +24,7 @@ apt-get -y install openvpn
 #rm $VER.x.zip
 #cp -r /etc/openvpn/easy-rsa-release-$VER.x/easy-rsa/2.0/* /etc/openvpn/easy-rsa
 
-#Install easy-rsa
+#Install easy-rsa v3.0.5
 cd /etc/openvpn
 mkdir easy-rsa
 wget https://github.com/OpenVPN/easy-rsa/archive/v3.0.5.zip
