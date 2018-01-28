@@ -3,9 +3,9 @@ dev tun
 proto udp
 port 1194
 ca /etc/openvpn/easy-rsa/keys/ca.crt
-cert /etc/openvpn/easy-rsa/keys/server.crt
-key /etc/openvpn/easy-rsa/keys/server.key
-dh /etc/openvpn/easy-rsa/keys/dh1024.pem
+cert /etc/openvpn/easy-rsa/pki/server.crt
+key /etc/openvpn/easy-rsa/pki/server.key
+dh /etc/openvpn/easy-rsa/pki/dh.pem
 server 10.8.0.0 255.255.255.0
 # server and remote endpoints
 ifconfig 10.8.0.1 10.8.0.2
@@ -24,7 +24,7 @@ push "redirect-gateway def1"
 client-to-client
 duplicate-cn
 keepalive 10 120
-tls-auth /etc/openvpn/easy-rsa/keys/ta.key 0
+tls-auth /etc/openvpn/easy-rsa/pki/ta.key 0
 cipher AES-128-CBC
 comp-lzo
 user nobody

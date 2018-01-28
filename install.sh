@@ -78,14 +78,22 @@ of encryption:" 8 78 2 \
 #EASY-RSA SETUP
 cd /etc/openvpn/easy-rsa
 cp vars.example vars
-sed -i 's:"`pwd`":"/etc/openvpn/easy-rsa":' vars #change
-if [ $ENCRYPT = 1024 ]; then
- sed -i 's:KEY_SIZE=2048:KEY_SIZE=1024:' vars
+#sed -i 's:"`pwd`":"/etc/openvpn/easy-rsa":' vars
+#if [ $ENCRYPT = 1024 ]; then
+# sed -i 's:KEY_SIZE=2048:KEY_SIZE=1024:' vars
+#fi
+
+#New of necessary
+#sed -i '/${0%/*}/ c\
+#set_var EASYRSA	"/etc/openvpn/easy-rsa"' vars
+if [ $ENCRYPT = 1024 ]; then 
+ sed -i '/EASYRSA_KEY_SIZE/ c\
+set_var EASYRSA_KEY_SIZE	1024' vars
 fi
 
 #Build the CA
 ./easyrsa init-pki
-easyrsa build-ca < /home/$USER/OpenVPN-Setup/ca_info.txt
+./easyrsa build-ca < /home/$USER/OpenVPN-Setup/ca_info.txt
 
 whiptail --title "Setup OpenVPN" --msgbox "You will now be asked for identifying \
 information for the server. Press 'Enter' to skip a field." 8 78
@@ -96,31 +104,36 @@ information for the server. Press 'Enter' to skip a field." 8 78
 ./easyrsa gen-dh
 
 #Generate HMAC key
-openvpn --genkey --secret ta.key
-
-#ok thru here
+openvpn --genkey --secret /pki/ta.key
 
 #SETUP OPENVPN SERVER
 #Write config file for server using the template .txt file
-sed 's/LOCALIP/'$LOCALIP'/' </home/$USER/OpenVPN-Setup/server_config.txt >/etc/openvpn/server/server.conf
-if [ $ENCRYPT = 2048 ]; then
- sed -i 's:dh1024:dh2048:' /etc/openvpn/server/server.conf
-fi
+#sed 's/LOCALIP/'$LOCALIP'/' </home/$USER/OpenVPN-Setup/server_config.txt >/etc/openvpn/server/server.conf
+cp /home/$USER/OpenVPN-Setup/server_config.txt /etc/openvpn/server/server.conf
+sed -i 's/LOCALIP/'$LOCALIP'/' /etc/openvpn/server/server.conf
+#Note sure if needed
+#if [ $ENCRYPT = 2048 ]; then
+# sed -i 's:dh1024:dh2048:' /etc/openvpn/server/server.conf
+#fi
 
 # Enable forwarding of internet traffic
 sed -i '/#net.ipv4.ip_forward=1/c\
 net.ipv4.ip_forward=1' /etc/sysctl.conf
-sudo sysctl -p
+sysctl -p
 
 # Write script to run openvpn and allow it through firewall on boot using the template .txt file
 sed 's/LOCALIP/'$LOCALIP'/' </home/$USER/OpenVPN-Setup/firewall-openvpn-rules.txt >/etc/firewall-openvpn-rules.sh
-sudo chmod 700 /etc/firewall-openvpn-rules.sh
-sudo chown root /etc/firewall-openvpn-rules.sh
+chmod 700 /etc/firewall-openvpn-rules.sh
+chown root /etc/firewall-openvpn-rules.sh
 sed -i -e '$i \/etc/firewall-openvpn-rules.sh\n' /etc/rc.local
 sed -i -e '$i \sudo service openvpn start\n' /etc/rc.local
 
 # Write default file for client .ovpn profiles, to be used by the MakeOVPN script, using template .txt file
-sed 's/PUBLICIP/'$PUBLICIP'/' </home/$USER/OpenVPN-Setup/Default.txt >/etc/openvpn/easy-rsa/keys/Default.txt
+#sed 's/PUBLICIP/'$PUBLICIP'/' </home/$USER/OpenVPN-Setup/Default.txt >/etc/openvpn/easy-rsa/pki/Default.txt
+cp /home/$USER/OpenVPN-Setup/Default.txt /etc/openvpn/easy-rsa/pki/Default.txt
+sed -i 's/PUBLICIP/'$PUBLICIP'/' /etc/openvpn/easy-rsa/pki/Default.txt
+
+#ok thru here
 
 # Make directory under home directory for .ovpn profiles
 mkdir /home/$USER/ovpns
@@ -128,8 +141,8 @@ chmod 777 -R /home/$USER/ovpns
 
 # Make other scripts in the package executable
 cd /home/$USER/OpenVPN-Setup
-sudo chmod +x MakeOVPN.sh
-sudo chmod +x remove.sh
+chmod +x MakeOVPN.sh
+chmod +x remove.sh
 chmod +x clean-ovpns.sh
 
 whiptail --title "Setup OpenVPN" --msgbox "Configuration complete. Restart \
