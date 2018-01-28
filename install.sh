@@ -84,27 +84,27 @@ if [ $ENCRYPT = 1024 ]; then
 fi
 
 #Build the CA
-source ./vars
-#./clean-all
+./easyrsa init-pki
 easyrsa build-ca < /home/$USER/OpenVPN-Setup/ca_info.txt
 
 whiptail --title "Setup OpenVPN" --msgbox "You will now be asked for identifying \
 information for the server. Press 'Enter' to skip a field." 8 78
 #Build server key pair
-#./build-key-server server
-easyrsa build-server-full server
+./easyrsa build-server-full server
 
 #Generate Diffie-Hellman exchange
-easyrsa gen-dh
+./easyrsa gen-dh
 
 #Generate HMAC key
-openvpn --genkey --secret keys/ta.key
+openvpn --genkey --secret ta.key
+
+#ok thru here
 
 #SETUP OPENVPN SERVER
 #Write config file for server using the template .txt file
-sed 's/LOCALIP/'$LOCALIP'/' </home/$USER/OpenVPN-Setup/server_config.txt >/etc/openvpn/server.conf
+sed 's/LOCALIP/'$LOCALIP'/' </home/$USER/OpenVPN-Setup/server_config.txt >/etc/openvpn/server/server.conf
 if [ $ENCRYPT = 2048 ]; then
- sed -i 's:dh1024:dh2048:' /etc/openvpn/server.conf
+ sed -i 's:dh1024:dh2048:' /etc/openvpn/server/server.conf
 fi
 
 # Enable forwarding of internet traffic
