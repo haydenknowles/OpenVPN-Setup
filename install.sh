@@ -96,7 +96,8 @@ fi
 
 #Build the CA
 ./easyrsa init-pki
-./easyrsa build-ca#< /home/$USER/OpenVPN-Setup/ca_info.txt #stalls here
+./easyrsa build-ca
+#< /home/$USER/OpenVPN-Setup/ca_info.txt #stalls here
 
 whiptail --title "Setup OpenVPN" --msgbox "You will now be asked for identifying \
 information for the server. Press 'Enter' to skip a field." 8 78
