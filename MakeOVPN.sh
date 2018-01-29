@@ -24,11 +24,12 @@ fi
 #read NAME 
  
 #Build the client key and then encrypt the key
-sudo chmod 777 -R /etc/openvpn
+chmod 777 -R /etc/openvpn
 cd /etc/openvpn/easy-rsa
-source ./vars
-./build-key-pass $NAME
-cd keys
+#change following
+#./build-key-pass $NAME
+./easyrsa build-client-full $NAME
+cd pki
 openssl rsa -in $NAME$OKEY -des3 -out $NAME$KEY
  
 #1st Verify that client�s Public Key Exists 
@@ -84,10 +85,12 @@ cat $TA >> $NAME$FILEEXT
 echo "</tls-auth>" >> $NAME$FILEEXT 
 
 # Copy the .ovpn profile to the home directory for convenient remote access
-cp /etc/openvpn/easy-rsa/keys/$NAME$FILEEXT /home/pi/ovpns/$NAME$FILEEXT
-sudo chmod 600 -R /etc/openvpn
+cp /etc/openvpn/easy-rsa/pki/$NAME$FILEEXT /home/pi/ovpns/$NAME$FILEEXT
+chmod 600 -R /etc/openvpn
 echo "$NAME$FILEEXT moved to home directory."
 whiptail --title "MakeOVPN" --msgbox "Done! $NAME$FILEEXT successfully created and \
 moved to directory /home/pi/ovpns." 8 78
  
 # Original script written by Eric Jodoin.
+
+#alter for any user

@@ -30,7 +30,7 @@ mkdir easy-rsa
 wget https://github.com/OpenVPN/easy-rsa/archive/v3.0.5.zip
 unzip v3.0.5.zip
 rm v3.0.5.zip
-cp -r /etc/openvpn/easy-rsa-3.0.5/easyrsa3 /etc/openvpn/easy-rsa
+cp -r /etc/openvpn/easy-rsa-3.0.5/easyrsa3/. /etc/openvpn/easy-rsa
 #Update command usage
 
 #ACCEPT CONFIGURATION INPUT FROM USER
@@ -83,17 +83,20 @@ cp vars.example vars
 # sed -i 's:KEY_SIZE=2048:KEY_SIZE=1024:' vars
 #fi
 
-#New of necessary
-#sed -i '/${0%/*}/ c\
-#set_var EASYRSA	"/etc/openvpn/easy-rsa"' vars
+#New if necessary- fix sed
+#set_var EASYRSA        "${0%/*}"
+
+sed -i '/#set_var EASYRSA        "${0%/*}"/ c\
+set_var EASYRSA	"/etc/openvpn/easy-rsa"' vars
+
 if [ $ENCRYPT = 1024 ]; then 
  sed -i '/EASYRSA_KEY_SIZE/ c\
-set_var EASYRSA_KEY_SIZE	1024' vars
+set_var EASYRSA_KEY_SIZE	 1024' vars
 fi
 
 #Build the CA
 ./easyrsa init-pki
-./easyrsa build-ca < /home/$USER/OpenVPN-Setup/ca_info.txt
+./easyrsa build-ca#< /home/$USER/OpenVPN-Setup/ca_info.txt #stalls here
 
 whiptail --title "Setup OpenVPN" --msgbox "You will now be asked for identifying \
 information for the server. Press 'Enter' to skip a field." 8 78
@@ -104,14 +107,14 @@ information for the server. Press 'Enter' to skip a field." 8 78
 ./easyrsa gen-dh
 
 #Generate HMAC key
-openvpn --genkey --secret /pki/ta.key
+openvpn --genkey --secret /pki/private/ta.key
 
 #SETUP OPENVPN SERVER
 #Write config file for server using the template .txt file
 #sed 's/LOCALIP/'$LOCALIP'/' </home/$USER/OpenVPN-Setup/server_config.txt >/etc/openvpn/server/server.conf
 cp /home/$USER/OpenVPN-Setup/server_config.txt /etc/openvpn/server/server.conf
 sed -i 's/LOCALIP/'$LOCALIP'/' /etc/openvpn/server/server.conf
-#Note sure if needed
+#Not sure if needed
 #if [ $ENCRYPT = 2048 ]; then
 # sed -i 's:dh1024:dh2048:' /etc/openvpn/server/server.conf
 #fi
@@ -130,8 +133,8 @@ sed -i -e '$i \sudo service openvpn start\n' /etc/rc.local
 
 # Write default file for client .ovpn profiles, to be used by the MakeOVPN script, using template .txt file
 #sed 's/PUBLICIP/'$PUBLICIP'/' </home/$USER/OpenVPN-Setup/Default.txt >/etc/openvpn/easy-rsa/pki/Default.txt
-cp /home/$USER/OpenVPN-Setup/Default.txt /etc/openvpn/easy-rsa/pki/Default.txt
-sed -i 's/PUBLICIP/'$PUBLICIP'/' /etc/openvpn/easy-rsa/pki/Default.txt
+cp /home/$USER/OpenVPN-Setup/default.txt /etc/openvpn/easy-rsa/pki/private/default.txt
+sed -i 's/PUBLICIP/'$PUBLICIP'/' /etc/openvpn/easy-rsa/pki/private/default.txt
 
 #ok thru here
 
