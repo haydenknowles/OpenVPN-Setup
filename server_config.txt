@@ -2,9 +2,9 @@ local LOCALIP
 dev tun
 proto udp
 port 1194
-ca /etc/openvpn/easy-rsa/keys/ca.crt
-cert /etc/openvpn/easy-rsa/pki/server.crt
-key /etc/openvpn/easy-rsa/pki/server.key
+ca /etc/openvpn/easy-rsa/pki/ca.crt
+cert /etc/openvpn/easy-rsa/pki/server.crt #where is this?
+key /etc/openvpn/easy-rsa/pki/private/server.key
 dh /etc/openvpn/easy-rsa/pki/dh.pem
 server 10.8.0.0 255.255.255.0
 # server and remote endpoints

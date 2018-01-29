@@ -86,8 +86,8 @@ cp vars.example vars
 #New if necessary- fix sed
 #set_var EASYRSA        "${0%/*}"
 
-sed -i '/#set_var EASYRSA        "${0%/*}"/ c\
-set_var EASYRSA	"/etc/openvpn/easy-rsa"' vars
+sed -i '/#set_var EASYRSA        "${0%/*}"/ c\ 
+set_var EASYRSA	"/etc/openvpn/easy-rsa"' vars #not working
 
 if [ $ENCRYPT = 1024 ]; then 
  sed -i '/EASYRSA_KEY_SIZE/ c\
@@ -102,13 +102,13 @@ fi
 whiptail --title "Setup OpenVPN" --msgbox "You will now be asked for identifying \
 information for the server. Press 'Enter' to skip a field." 8 78
 #Build server key pair
-./easyrsa build-server-full server
+./easyrsa build-server-full server #error messages appear here re index.txt
 
 #Generate Diffie-Hellman exchange
 ./easyrsa gen-dh
 
 #Generate HMAC key
-openvpn --genkey --secret /pki/private/ta.key
+openvpn --genkey --secret pki/private/ta.key
 
 #SETUP OPENVPN SERVER
 #Write config file for server using the template .txt file
