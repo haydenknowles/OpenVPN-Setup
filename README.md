@@ -174,20 +174,23 @@ If you have found this tool to be useful and want to use
 [this PayPal link](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K99QGVL7KA6ZL)
 to buy me a gallon of gas, I would be very grateful!
 
-If you decide to do so, please also consider supporting OpenVPN; they
-have produced a wonderful open-source product, and all credit for it goes to
-their community and their hard work. All I did was write a little automated
-front-end for its installation on Raspbian.
+If you decide to do so, please also consider supporting OpenVPN; they have produced a wonderful open-source product, and all credit for it goes to their community and their hard work. this project is merely an automated
+front-end for its installation on Raspbian (written more for my benefit than anyone else's).
 
 Thanks
 ------
 
-This script automates and streamlines the process outlined by a great many
-people from many corners of the internet for setting up OpenVPN on a Raspberry
-Pi. In particular, thanks go to Lauren Orsini at ReadWrite, who wrote the
-excellent tutorial upon which this script is based (see sources 3 and 4). Thanks
- also go to the Raspberry Pi Foundation, the Raspberry Pi community, and to
- OpenVPN.
+Thanks for this project go in particular to:
+
+Eric Jodoin of the SANS institute, for writing the whitepaper on the topic of setting up a low-cost VPN with OpenVPN on a Raspberry Pi upon which this script is ultimately based (source 3). To my knowledge, Eric is the origin of this knowledge.
+
+Lauren Orsini at ReadWrite, who translated the above paper and wrote the excellent tutorial upon which this script was directly based in the days of Raspbian Wheezy (sources 4 and 5).
+
+The OpenVPN community which has developed the wonderful open-source software that forms the backbone of this project (both OpenVPN and EasyRSA).
+
+The Raspberry Pi Foundation, which developed and produces the awesome hardware and programming platform used here.
+
+The Raspberry Pi community at large, which helped me identify and troubleshoot more problems than I was able to document.
 
 Sources
 -------
@@ -196,6 +199,8 @@ Sources
 
 2: [ReadWrite: 5 Pointers To Supercharge Your Raspberry Pi Projects](http://readwrite.com/2014/04/09/raspberry-pi-projects-ssh-remote-desktop-static-ip-tutorial?utm_content=readwrite3-orionautotweet&awesm=readwr.it_b1UN&utm_campaign=&utm_medium=readwr.it-twitter&utm_source=t.co#awesm=~oAXilI0BMOHsS3)
 
-3: [ReadWrite: Building A Raspberry Pi VPN Part 1](http://readwrite.com/2014/04/10/raspberry-pi-vpn-tutorial-server-secure-web-browsing)
+3: SANS Institute InfoSec Reading Room: SOHO Remote Access VPN Easy as Pie Raspberry Pi by Eric Jodoin
 
-4: [ReadWrite: Building A Raspberry Pi VPN Part 2](http://readwrite.com/2014/04/11/building-a-raspberry-pi-vpn-part-two-creating-an-encrypted-client-side#awesm=~oB89WBfWrt21bV)
+4: [ReadWrite: Building A Raspberry Pi VPN Part 1](http://readwrite.com/2014/04/10/raspberry-pi-vpn-tutorial-server-secure-web-browsing)
+
+5: [ReadWrite: Building A Raspberry Pi VPN Part 2](http://readwrite.com/2014/04/11/building-a-raspberry-pi-vpn-part-two-creating-an-encrypted-client-side#awesm=~oB89WBfWrt21bV)
