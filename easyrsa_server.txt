@@ -1,3 +1,0 @@
-./easyrsa init-pki
-./easyrsa build-ca
-./easyrsa sign-req server EntityName

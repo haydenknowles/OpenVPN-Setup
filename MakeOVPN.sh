@@ -1,7 +1,7 @@
 #!/bin/bash 
  
 # Default Variable Declarations 
-DEFAULT="Default.txt" 
+DEFAULT="default.txt" 
 FILEEXT=".ovpn" 
 CRT=".crt" 
 OKEY=".key"
@@ -20,16 +20,16 @@ else
  exit
 fi
 
-#echo "Please enter a Name for the Client:"
-#read NAME 
+#Major changes to paths for requisite files are needed
+#Possible solution- define filepath variables for pki (ca.crt), private (client.key, ta.key), issued (client.crt) directores
  
 #Build the client key and then encrypt the key
 chmod 777 -R /etc/openvpn
 cd /etc/openvpn/easy-rsa
 #change following
 #./build-key-pass $NAME
-./easyrsa build-client-full $NAME
-cd pki
+./easyrsa build-client-full $NAME #changed
+cd pki/private #changed
 openssl rsa -in $NAME$OKEY -des3 -out $NAME$KEY
  
 #1st Verify that client�s Public Key Exists 
@@ -91,6 +91,6 @@ echo "$NAME$FILEEXT moved to home directory."
 whiptail --title "MakeOVPN" --msgbox "Done! $NAME$FILEEXT successfully created and \
 moved to directory /home/pi/ovpns." 8 78
  
-# Original script written by Eric Jodoin.
+# Based upon original script written by Eric Jodoin.
 
 #alter for any user
