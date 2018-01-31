@@ -78,7 +78,7 @@ if [ $ENCRYPT = 1024 ]; then
 set_var EASYRSA_KEY_SIZE	 1024' vars
 fi
 
-#Clean previous PKI & build the CA
+#Clean any previous PKI & build the CA
 ./easyrsa init-pki
 ./easyrsa build-ca
 
@@ -92,17 +92,12 @@ information for the server. Press 'Enter' to skip a field." 8 78
 ./easyrsa gen-dh
 
 #Generate HMAC key
-openvpn --genkey --secret pki/private/ta.key
+openvpn --genkey --secret pki/ta.key
 
 #SETUP OPENVPN SERVER
 #Write config file for server using the template .txt file
 cp /home/$USER/OpenVPN-Setup/server_config.txt /etc/openvpn/server/server.conf
 sed -i 's/LOCALIP/'$LOCALIP'/' /etc/openvpn/server/server.conf
-
-#Not sure if needed
-#if [ $ENCRYPT = 2048 ]; then
-# sed -i 's:dh1024:dh2048:' /etc/openvpn/server/server.conf
-#fi
 
 # Enable forwarding of internet traffic
 sed -i '/#net.ipv4.ip_forward=1/c\
