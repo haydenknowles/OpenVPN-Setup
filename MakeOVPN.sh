@@ -62,7 +62,7 @@ echo "tls-auth Private Key found: $PUBPATH$TA"
  
 #Ready to make a new .opvn file - Start by populating with the
 #default file 
-cat $DEFAULT > $NAME$FILEEXT 
+cat $KEYPATH$DEFAULT > $NAME$FILEEXT 
  
 #Now, append the CA Public Cert
 echo "<ca>" >> $NAME$FILEEXT
@@ -85,7 +85,7 @@ cat $PUBPATH$TA >> $NAME$FILEEXT
 echo "</tls-auth>" >> $NAME$FILEEXT 
 
 # Copy the .ovpn profile to the home directory for convenient remote access
-cp /etc/openvpn/easy-rsa/pki/$NAME$FILEEXT /home/pi/ovpns/$NAME$FILEEXT
+cp /etc/openvpn/easy-rsa/$KEYPATH$NAME$FILEEXT /home/pi/ovpns/$NAME$FILEEXT
 chmod 600 -R /etc/openvpn
 echo "$NAME$FILEEXT moved to ovpns directory."
 whiptail --title "MakeOVPN" --msgbox "Done! $NAME$FILEEXT successfully created and \
