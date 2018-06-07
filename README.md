@@ -1,6 +1,9 @@
 OpenVPN-Setup
 ============
 
+Note: Ongoing research into fixing Easy-RSA dependency in Raspbian Stretch is being conducted
+=============================================================================================
+
 About
 -----
 
@@ -145,3 +148,59 @@ pre-installation state, such as if you want to undo a failed installation to try
 you want to remove OpenVPN without installing a fresh Raspbian image, just cd into
 OpenVPN-Setup, execute the setup script, and choose option 03, or make sure remove.sh is
 executable and run it with sudo.
+
+Feedback & Support
+--------
+
+I am interested in making this script work for as many people as possible, so I
+welcome any feedback on your experience. If you have problems using it, feel
+free to leave a comment and send me an email and I'll get back to you as soon as
+ I can. It may take some time to resolve issues, as the number of users of this
+ script has grown and I no longer have as much time to devote towards
+ maintenance as when I first wrote the script.
+
+I also encourage discussion of issues, solutions, and ideas on the RaspberryPi.org forum thread for the project [here.](https://www.raspberrypi.org/forums/viewtopic.php?f=36&t=137240&p=911599&hilit=OpenVPN#p911599) I'd love for users to have the opportunity to discuss their ideas with each other!
+
+Contributions
+-------------
+
+I'm also interested in improving this script, and will be adding features to it
+over time to make it easier, more intuitive, and more versatile. If you have any
+ feature ideas or requests, or are interested in adding your ideas to it,
+ testing it on other platforms, or localizing it to another language, please
+ comment or leave a pull request. I will be happy to work with you!
+
+If you have found this tool to be useful and want to use
+[this PayPal link](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K99QGVL7KA6ZL)
+to buy me a gallon of gas, I would be very grateful!
+
+If you decide to do so, please also consider supporting OpenVPN; they have produced a wonderful open-source product, and all credit for it goes to their community and their hard work. this project is merely an automated
+front-end for its installation on Raspbian (written more for my benefit than anyone else's).
+
+Thanks
+------
+
+Thanks for this project go in particular to:
+
+Eric Jodoin of the SANS institute, for writing the whitepaper on the topic of setting up a low-cost VPN with OpenVPN on a Raspberry Pi upon which this script is ultimately based (source 3). To my knowledge, Eric is the origin of this knowledge.
+
+Lauren Orsini at ReadWrite, who translated the above paper and wrote the excellent tutorial upon which this script was directly based in the days of Raspbian Wheezy (sources 4 and 5).
+
+The OpenVPN community which has developed the wonderful open-source software that forms the backbone of this project (both OpenVPN and EasyRSA).
+
+The Raspberry Pi Foundation, which developed and produces the awesome hardware and programming platform used here.
+
+The Raspberry Pi community at large, which helped me identify and troubleshoot more problems than I was able to document.
+
+Sources
+-------
+
+1: [ModMyPi: How to give your Raspberry Pi a Static IP Address - UPDATE](https://www.modmypi.com/blog/how-to-give-your-raspberry-pi-a-static-ip-address-update)
+
+2: [ReadWrite: 5 Pointers To Supercharge Your Raspberry Pi Projects](http://readwrite.com/2014/04/09/raspberry-pi-projects-ssh-remote-desktop-static-ip-tutorial?utm_content=readwrite3-orionautotweet&awesm=readwr.it_b1UN&utm_campaign=&utm_medium=readwr.it-twitter&utm_source=t.co#awesm=~oAXilI0BMOHsS3)
+
+3: SANS Institute InfoSec Reading Room: SOHO Remote Access VPN Easy as Pie Raspberry Pi by Eric Jodoin
+
+4: [ReadWrite: Building A Raspberry Pi VPN Part 1](http://readwrite.com/2014/04/10/raspberry-pi-vpn-tutorial-server-secure-web-browsing)
+
+5: [ReadWrite: Building A Raspberry Pi VPN Part 2](http://readwrite.com/2014/04/11/building-a-raspberry-pi-vpn-part-two-creating-an-encrypted-client-side#awesm=~oB89WBfWrt21bV)
